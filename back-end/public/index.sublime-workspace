@@ -1,0 +1,303 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"cre",
+				"created_by"
+			],
+			[
+				"cr",
+				"created_at"
+			],
+			[
+				"crea",
+				"created_by"
+			],
+			[
+				"role",
+				"role"
+			],
+			[
+				"da",
+				"data"
+			],
+			[
+				"dele",
+				"deleted_by"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"user",
+				"user_del"
+			],
+			[
+				"new",
+				"newpassword"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"req",
+				"request"
+			],
+			[
+				"pas",
+				"password"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"data",
+				"Database"
+			],
+			[
+				"router",
+				"router"
+			],
+			[
+				"ti",
+				"title\tTag"
+			],
+			[
+				"met",
+				"meta\tTag"
+			],
+			[
+				"h",
+				"head\tTag"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 136.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/himanshudwivedi/blog/vendor/phpunit/php-token-stream/tests/_fixture/class_with_method_named_empty.php",
+		"/Users/himanshudwivedi/blog/vendor/firebase/php-jwt/src/JWT.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/auth/AuthManager.php",
+		"/Users/himanshudwivedi/blog/vendor/mockery/mockery/library/Mockery/Exception.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/database/Eloquent/SoftDeletes.php",
+		"/Users/himanshudwivedi/blog/vendor/doctrine/instantiator/src/Doctrine/Instantiator/Exception/UnexpectedValueException.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/support/Collection.php",
+		"/Users/himanshudwivedi/blog/vendor/fzaninotto/faker/src/Faker/Provider/ko_KR/PhoneNumber.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/queue/Console/ListFailedCommand.php",
+		"/Users/himanshudwivedi/blog/bootstrap/app.php",
+		"/Users/himanshudwivedi/blog/vendor/firebase/php-jwt/src/ExpiredException.php",
+		"/Users/himanshudwivedi/blog/app/Http/Controllers/ForgetController.php",
+		"/Users/himanshudwivedi/blog/vendor/egulias/email-validator/EmailValidator/EmailLexer.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/database/Eloquent/Concerns/GuardsAttributes.php",
+		"/Users/himanshudwivedi/blog/app/Http/Middleware/AuthMiddleware.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/database/Eloquent/Builder.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/contracts/Support/MessageBag.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/database/Connection.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/database/Schema/Blueprint.php",
+		"/Users/himanshudwivedi/blog/app/Http/Middleware/Authenticate.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/http/Request.php",
+		"/Users/himanshudwivedi/blog/vendor/dragonmantank/cron-expression/src/Cron/AbstractField.php",
+		"/Users/himanshudwivedi/blog/vendor/illuminate/support/helpers.php",
+		"/Users/himanshudwivedi/blog/app/Http/Controllers/AuthController.php",
+		"/Users/himanshudwivedi/blog/vendor/fzaninotto/faker/src/Faker/Factory.php",
+		"/Users/himanshudwivedi/blog/vendor/fzaninotto/faker/src/Faker/Provider/Internet.php",
+		"/Users/himanshudwivedi/blog/vendor/laravel/lumen-framework/config/database.php",
+		"/Users/himanshudwivedi/blog/database/seeds/DatabaseSeeder.php",
+		"/Users/himanshudwivedi/blog/database/seeds/UsersTableSeeder.php",
+		"/Users/himanshudwivedi/blog/database/migrations/2019_06_24_121706_create_users_table.php",
+		"/Users/himanshudwivedi/blog/.env.example",
+		"/Users/himanshudwivedi/blog/app/Http/Controllers/LoginController.php",
+		"/Users/himanshudwivedi/blog/app/Http/Controllers/UsersController.php",
+		"/Users/himanshudwivedi/blog/database/migrations/create_users.php",
+		"/Users/himanshudwivedi/blog/app/users.php",
+		"/Users/himanshudwivedi/blog/app/Http/Middleware/ExampleMiddleware.php",
+		"/Users/himanshudwivedi/blog/resources/views/.gitkeep",
+		"/Users/himanshudwivedi/blog/database/factories/ModelFactory.php",
+		"/Users/himanshudwivedi/blog/routes/web.php",
+		"/Users/himanshudwivedi/blog/public/index.php",
+		"/Users/himanshudwivedi/Documents/index.view.php",
+		"/Users/himanshudwivedi/Documents/index.php"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "index.sublime-project",
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"app",
+				"bootstrap/app.php"
+			],
+			[
+				"",
+				"routes/web.php"
+			],
+			[
+				"databas",
+				"vendor/laravel/lumen-framework/config/database.php"
+			],
+			[
+				".env",
+				".env"
+			],
+			[
+				".en",
+				".env.example"
+			],
+			[
+				"req",
+				"vendor/illuminate/http/Request.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 167.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
