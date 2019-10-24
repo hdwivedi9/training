@@ -20,6 +20,7 @@ class ArticleController extends Controller
 
     public function search(Request $request){
         $q = $request->searchQuery;
+        if($q === null) $q = '';
         $result = $this->articleRepository->search($q);
         $res['data'] = $result;
         $res['success'] = true;
