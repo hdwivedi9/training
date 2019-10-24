@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Articles;
+namespace App\Repositories;
 
 use App\Article;
 use Elasticsearch\Client;
