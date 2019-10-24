@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from "react-redux";
 import {withCookies } from 'react-cookie';
 import {Navbar, Header} from './layout';
-import {Home, Login, Task, User, Register, NewUser, NewTask} from './components';
+import {Home, Login, Task, User, Register, NewUser, NewTask, Article} from './components';
 import {Helmet} from 'react-helmet';
 import {getAuth} from "./actions/auth";
 import './App.css';
@@ -27,6 +27,7 @@ class App extends Component {
         <Route exact path="/user" component={withCookies(User)} />
         <Route exact path="/user/new" component={NewUser} />
         <Route exact path="/task/new" component={NewTask} />
+        <Route exact path="/article" component={Article} />
       </BrowserRouter>
     )};
 }

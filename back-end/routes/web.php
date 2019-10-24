@@ -39,3 +39,5 @@ $router->post('/forget/new_pass', ['as'=> 'new_pass', 'uses'=>'ForgetController@
 
 $router->get('/sendMail', 'MailController@sendMail');
 $router->get('/sendMail/queue', 'MailController@queueMail');
+
+$router->get('/article', 'ArticleController@search');
