@@ -32,6 +32,9 @@ class ElasticsearchRepository implements ArticleInterface
             $items = $this->elasticsearch->search([
                 'index' => $model->getSearchIndex(),
                 'type' => $model->getSearchType(),
+                'body' => [
+                    'size' => 50,
+                ],
             ]);
             return $items;
         }
@@ -39,6 +42,7 @@ class ElasticsearchRepository implements ArticleInterface
             'index' => $model->getSearchIndex(),
             'type' => $model->getSearchType(),
             'body' => [
+                'size' => 50,
                 'query' => [
                     'multi_match' => [
                         'fields' => ['title', 'body', 'tags'],
