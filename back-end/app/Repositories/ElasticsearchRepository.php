@@ -28,14 +28,20 @@ class ElasticsearchRepository implements ArticleInterface
     private function searchOnElasticsearch(string $query = ''): array
     {
         $model = new Article;
-
+        if($query === ''){
+            $items = $this->elasticsearch->search([
+                'index' => $model->getSearchIndex(),
+                'type' => $model->getSearchType(),
+            ]);
+            return $items;
+        }
         $items = $this->elasticsearch->search([
             'index' => $model->getSearchIndex(),
             'type' => $model->getSearchType(),
             'body' => [
                 'query' => [
                     'multi_match' => [
-                        'fields' => ['title^5', 'body', 'tags'],
+                        'fields' => ['title', 'body', 'tags'],
                         'query' => $query,
                     ],
                 ],

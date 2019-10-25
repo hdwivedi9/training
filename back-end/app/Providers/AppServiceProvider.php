@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Elasticsearch\Client;
+use Elasticsearch\ClientBuilder;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,10 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(
-            \App\Repositories\Interfaces\ArticleInterface::class, function () {
-                // This is useful in case we want to turn-off our
-                // search cluster or when deploying the search
-                // to a live, running application at first.
+            \App\Repositories\Interfaces\ArticleInterface::class, function ($app) {
                 if (! config('services.search.enabled')) {
                     return new \App\Repositories\ArticleRepository();
                 }
@@ -29,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
         );
         $this->bindSearchClient();
     }
-    
+
     private function bindSearchClient()
     {
         $this->app->bind(Client::class, function ($app) {

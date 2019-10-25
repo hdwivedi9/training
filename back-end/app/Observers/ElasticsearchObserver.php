@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Search;
+namespace App\Observers;
 
 use App\Article;
 use Elasticsearch\Client;

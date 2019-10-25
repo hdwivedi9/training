@@ -69,7 +69,7 @@ class Article extends Component {
 }
 
 const mapStateToProps = state => ({
-  article: state.article.result.data,
+  article: state.article.result,
 });
 
 export default connect(
