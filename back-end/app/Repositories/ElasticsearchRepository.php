@@ -44,9 +44,9 @@ class ElasticsearchRepository implements ArticleInterface
             'body' => [
                 'size' => 50,
                 'query' => [
-                    'multi_match' => [
+                    'query_string' => [
                         'fields' => ['title', 'body', 'tags'],
-                        'query' => $query,
+                        'query' => '*' . $query . '*',
                     ],
                 ],
             ],
