@@ -60,11 +60,11 @@ class Navbar extends Component {
           </Link>
         </ul>
         <ul
-          className="nav-link"
+          className="nav-item"
           onClick={this.onLogout.bind(this)}
           style={{ display: "inline-block" }}
         >
-          <span style={{ color: "#f54b4b", cursor: "pointer" }}>Logout</span>
+          <div className="p-2" style={{ color: "#f54b4b", cursor: "pointer" }}>Logout</div>
         </ul>
       </ul>
     );
@@ -75,15 +75,15 @@ class Navbar extends Component {
       >
         <Link
           className="navbar-brand"
-          to="/"
+          to="/article"
           style={{
             color: "#f78b8b",
             fontWeight: "bold",
-            paddingLeft: "50px",
+            paddingLeft: "35px",
             paddingRight: "800px"
           }}
         >
-          {this.props.user.name}
+          Articles
         </Link>
         <div
           className="collapse navbar-collapse ml-auto"
