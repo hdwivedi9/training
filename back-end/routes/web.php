@@ -41,3 +41,4 @@ $router->get('/sendMail', 'MailController@sendMail');
 $router->get('/sendMail/queue', 'MailController@queueMail');
 
 $router->get('/article', 'ArticleController@search');
+$router->post('/newArticle', 'ArticleController@newArticle');

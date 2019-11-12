@@ -15,3 +15,7 @@ export const search = ({...params}) => dispatch => {
     	})
     })
 }
+
+export const newArticle = ({...params}) => dispatch => {
+    return axios.post('http://localhost:8000/newArticle', { ...params })
+}

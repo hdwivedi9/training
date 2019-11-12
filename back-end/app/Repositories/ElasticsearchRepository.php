@@ -18,6 +18,16 @@ class ElasticsearchRepository implements ArticleInterface
         $this->elasticsearch = $elasticsearch;
     }
 
+    public function newArticle(Collection $article)
+    {
+        $this->elasticsearch->index([
+            'index' => $article->getSearchIndex(),
+            'type' => $article->getSearchType(),
+            'id' => $article->getKey(),
+            'body' => $article->toSearchArray(),
+        ]);
+    }
+
     public function search(string $query = ''): Collection
     {
         $items = $this->searchOnElasticsearch($query);
@@ -34,7 +44,7 @@ class ElasticsearchRepository implements ArticleInterface
                 'index' => $model->getSearchIndex(),
                 'type' => $model->getSearchType(),
                 'body' => [
-                    'size' => 50,
+                    'size' => 100,
                 ],
             ]);
             return $items;
@@ -44,7 +54,7 @@ class ElasticsearchRepository implements ArticleInterface
             'index' => $model->getSearchIndex(),
             'type' => $model->getSearchType(),
             'body' => [
-                'size' => 50,
+                'size' => 100,
                 'query' => [
                     'dis_max' => [
                         'queries' => [
