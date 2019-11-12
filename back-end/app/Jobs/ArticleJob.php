@@ -2,13 +2,16 @@
 
 namespace App\Jobs;
 
+use App\Article;
 use App\Repositories\ElasticsearchRepository;
 
 class ArticleJob extends Job
 {
-    public function __construct()
+    private $article;
+
+    public function __construct(Article $article)
     {
-        //
+        $this->article = $article;
     }
 
     /**
@@ -16,8 +19,8 @@ class ArticleJob extends Job
      *
      * @return void
      */
-    public function handle()
-    {
-        (new ElasticsearchRepository)->newArticle($article);
+    public function handle(ElasticsearchRepository $elasticRepo)
+    {   
+        $elasticRepo->newArticle($this->article);
     }
 }

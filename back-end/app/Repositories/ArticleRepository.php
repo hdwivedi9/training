@@ -15,4 +15,9 @@ class ArticleRepository implements ArticleInterface
             ->orWhere('title', 'like', "%{$query}%")
             ->get();
     }
+
+    public function newArticle(Article $article)
+    {
+    	//
+    }
 }

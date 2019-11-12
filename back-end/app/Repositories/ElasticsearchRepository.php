@@ -18,7 +18,7 @@ class ElasticsearchRepository implements ArticleInterface
         $this->elasticsearch = $elasticsearch;
     }
 
-    public function newArticle(Collection $article)
+    public function newArticle(Article $article)
     {
         $this->elasticsearch->index([
             'index' => $article->getSearchIndex(),
