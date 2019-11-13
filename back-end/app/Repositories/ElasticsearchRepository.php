@@ -56,25 +56,10 @@ class ElasticsearchRepository implements ArticleInterface
             'body' => [
                 'size' => 100,
                 'query' => [
-                    'dis_max' => [
-                        'queries' => [
-                            [
-                                'match' => [
-                                    'title' => $query,
-                                ]
-                            ],
-                            [
-                                'match' => [
-                                    'body' => $query,
-                                ]
-                            ],
-                            [
-                                'match' => [
-                                    'tags' => $query,
-                                ]
-                            ],
-                        ],
-                        'tie_breaker' => 0,
+                    'simple_query_string' => [
+                        'query' => $query,
+                        'fields' => ["title^5", "body", "tags^2"],
+                        'default_operator' => 'or',
                     ],
                 ],
             ],
