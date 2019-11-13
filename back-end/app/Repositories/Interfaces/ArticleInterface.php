@@ -9,4 +9,5 @@ interface ArticleInterface
 {
     public function search(string $query = ''): Collection;
     public function newArticle(Article $article);
+    public function groupByTags(): array;
 }

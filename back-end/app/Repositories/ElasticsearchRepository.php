@@ -83,6 +83,27 @@ class ElasticsearchRepository implements ArticleInterface
         return $items;
     }
 
+    public function groupByTags(): array
+    {
+        $model = new Article;
+        $items = $this->elasticsearch->search([
+            'index' => $model->getSearchIndex(),
+            'type' => $model->getSearchType(),
+            'body' => [
+                'size' => 10,
+                'aggs' => [
+                    'aggs_tags' => [
+                        'terms' => [
+                            'field' => 'tags.keyword',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+        $buckets = $items['aggregations']['aggs_tags']['buckets'];
+        return $buckets;
+    }
+
     private function buildCollection(array $items): Collection
     {
         $ids = Arr::pluck($items['hits']['hits'], '_id');

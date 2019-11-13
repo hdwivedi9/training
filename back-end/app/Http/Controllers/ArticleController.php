@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -28,6 +27,12 @@ class ArticleController extends Controller
         $res['message'] = 'Query Successfull';
         return response($res, 200);
 
+    }
+
+    public function groupByTags(){
+        $result = $this->articleRepository->groupByTags();
+        $res['data'] = $result;
+        return response($res, 200);
     }
 
     public function newArticle(Request $request){

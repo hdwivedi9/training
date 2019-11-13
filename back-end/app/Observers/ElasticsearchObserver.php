@@ -6,6 +6,7 @@ use App\Article;
 use Elasticsearch\Client;
 use App\Jobs\ArticleJob;
 use Illuminate\Support\Facades\Queue;
+use Carbon\Carbon;
 
 class ElasticsearchObserver
 {
@@ -19,7 +20,7 @@ class ElasticsearchObserver
 
     public function saved($model)
     {
-        Queue::push(new ArticleJob($model));
+        Queue::later(5, new ArticleJob($model));
         // $this->elasticsearch->index([
         //     'index' => $model->getSearchIndex(),
         //     'type' => $model->getSearchType(),

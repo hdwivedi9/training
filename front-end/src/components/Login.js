@@ -27,7 +27,6 @@ class Login extends Component {
         this.props.history.push("/task");
       })
       .catch(err => {
-        //console.log(err.response);
         throw new SubmissionError({
           email: err.response.data.email,
           _error: err.response.data.message

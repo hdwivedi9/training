@@ -1,0 +1,10 @@
+td, tr {
+	padding: 5px;
+}
+.article {
+	max-width: 1000px;
+	margin-left: 100px;
+}
+.button-container{
+	text-align: center;
+}

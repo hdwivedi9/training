@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SET_ARTICLE } from './types';
+import { SET_ARTICLE, SET_TAGS } from './types';
 import _ from 'lodash'
 
 export const search = ({...params}) => dispatch => {
@@ -18,4 +18,10 @@ export const search = ({...params}) => dispatch => {
 
 export const newArticle = ({...params}) => dispatch => {
     return axios.post('http://localhost:8000/newArticle', { ...params })
+}
+
+export const tags = () => dispatch => {
+    return axios.get('http://localhost:8000/tags').then(res => {
+        dispatch({ type: SET_TAGS, data: res.data.data })
+    })
 }
