@@ -20,18 +20,11 @@ class ElasticsearchObserver
 
     public function saved($model)
     {
-        Queue::later(5, new ArticleJob($model));
-        // $this->elasticsearch->index([
-        //     'index' => $model->getSearchIndex(),
-        //     'type' => $model->getSearchType(),
-        //     'id' => $model->getKey(),
-        //     'body' => $model->toSearchArray(),
-        // ]);
+        Queue::push(new ArticleJob($model));
     }
 
     public function deleted($model)
     {
-        //Queue::push(ArticleJob($model))
         $this->elasticsearch->delete([
             'index' => $model->getSearchIndex(),
             'type' => $model->getSearchType(),

@@ -28,14 +28,7 @@ class ElasticsearchRepository implements ArticleInterface
         ]);
     }
 
-    public function search(string $query = ''): Collection
-    {
-        $items = $this->searchOnElasticsearch($query);
-
-        return $this->buildCollection($items);
-    }
-
-    private function searchOnElasticsearch(string $query = ''): array
+    public function search(string $query = ''): array
     {
         $model = new Article;
 
@@ -47,25 +40,25 @@ class ElasticsearchRepository implements ArticleInterface
                     'size' => 100,
                 ],
             ]);
-            return $items;
         }
-
-        $items = $this->elasticsearch->search([
-            'index' => $model->getSearchIndex(),
-            'type' => $model->getSearchType(),
-            'body' => [
-                'size' => 100,
-                'query' => [
-                    'simple_query_string' => [
-                        'query' => $query,
-                        'fields' => ["title^5", "body", "tags^2"],
-                        'default_operator' => 'or',
+        else {
+            $items = $this->elasticsearch->search([
+                'index' => $model->getSearchIndex(),
+                'type' => $model->getSearchType(),
+                'body' => [
+                    'size' => 100,
+                    'query' => [
+                        'simple_query_string' => [
+                            'query' => $query,
+                            'fields' => ["title^5", "body", "tags^2"],
+                            'default_operator' => 'or',
+                        ],
                     ],
                 ],
-            ],
-        ]);
-
-        return $items;
+            ]);
+        }
+        $articles = $items['hits']['hits'];
+        return $articles;
     }
 
     public function groupByTags(): array
@@ -87,15 +80,5 @@ class ElasticsearchRepository implements ArticleInterface
         ]);
         $buckets = $items['aggregations']['aggs_tags']['buckets'];
         return $buckets;
-    }
-
-    private function buildCollection(array $items): Collection
-    {
-        $ids = Arr::pluck($items['hits']['hits'], '_id');
-
-        return Article::findMany($ids)
-            ->sortBy(function ($article) use ($ids) {
-                return array_search($article->getKey(), $ids);
-            });
     }
 }

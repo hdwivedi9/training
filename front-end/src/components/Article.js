@@ -30,11 +30,6 @@ class Article extends Component {
     this.props.search();
     this.props.tags();
   }
-  // componentDidUpdate(prevProps, prevState) {
-  //   if(!_.isEqual(this.props, prevProps)){
-  //     this.props.tags()
-  //   }
-  // }
   handleChange = e => {
     this.setState({[e.target.name]: e.target.value})
   }
@@ -72,7 +67,6 @@ class Article extends Component {
   }
   render() {
   	const { article, tag_count } = this.props
-    console.log(tag_count)
     if(!article) return null
     return (
 			<div className="container">
@@ -106,8 +100,8 @@ class Article extends Component {
                 </tr>
               </thead>
               <tbody>
-                {tag_count.map(v => (
-                  <tr>
+                {tag_count.map((v,i) => (
+                  <tr key={i}>
                     <td>{v.key}</td>
                     <td>{v.doc_count}</td>
                   </tr>
