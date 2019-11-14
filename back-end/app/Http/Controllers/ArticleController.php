@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Repositories\Interfaces\ArticleInterface;
 use App\Article;
+use App\users;
 
 class ArticleController extends Controller
 {
@@ -22,6 +23,13 @@ class ArticleController extends Controller
         $q = $request->searchQuery;
         if($q === null) $q = '';
         $result = $this->articleRepository->search($q);
+
+        foreach($result as $k => $r){
+            $user = users::find($r['created_by']);
+            if(!is_null($user)){
+                $result[$k]['created_by'] = $user->name;
+            }
+        }
         $res['data'] = $result;
         $res['success'] = true;
         $res['message'] = 'Query Successfull';

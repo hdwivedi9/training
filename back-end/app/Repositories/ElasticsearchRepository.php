@@ -58,7 +58,7 @@ class ElasticsearchRepository implements ArticleInterface
             ]);
         }
         $articles = $items['hits']['hits'];
-        return $articles;
+        return Arr::pluck($articles, '_source');
     }
 
     public function groupByTags(): array

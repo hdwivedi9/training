@@ -5,7 +5,7 @@ import _ from 'lodash'
 export const search = ({...params}) => dispatch => {
     return axios.get('http://localhost:8000/article', { params: params })
     .then(res => {
-    	let data = res.data.data.map(v => v._source)
+    	let data = res.data.data
     	dispatch({ type: SET_ARTICLE, data: data })
     })
 }

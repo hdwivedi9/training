@@ -6,6 +6,7 @@ import {Navbar, Header} from './layout';
 import {Home, Login, Task, User, Register, NewUser, NewTask, Article} from './components';
 import {Helmet} from 'react-helmet';
 import {getAuth} from "./actions/auth";
+import {Authenticate}from "./components/hoc/Authenticate";
 import './App.css';
 
 class App extends Component {
@@ -23,10 +24,10 @@ class App extends Component {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={withCookies(Login)} />
         <Route exact path="/register" component={Register} />
-        <Route exact path="/task" component={Task} />
-        <Route exact path="/user" component={withCookies(User)} />
-        <Route exact path="/user/new" component={NewUser} />
-        <Route exact path="/task/new" component={NewTask} />
+        <Route exact path="/task" component={withCookies(Authenticate(Task))} />
+        <Route exact path="/user" component={withCookies(Authenticate(User))} />
+        <Route exact path="/user/new" component={withCookies(Authenticate(NewUser))} />
+        <Route exact path="/task/new" component={withCookies(Authenticate(NewTask))} />
         <Route exact path="/article" component={Article} />
       </BrowserRouter>
     )};

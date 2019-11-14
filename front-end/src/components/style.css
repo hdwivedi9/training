@@ -8,3 +8,19 @@ td, tr {
 .button-container{
 	text-align: center;
 }
+h2 {
+	display: inline-block;
+}
+h2 + span {
+	padding-left: 30px;
+  font-size: large;
+  font-style: italic;
+  font-weight: 300;
+  color: darkslateblue;
+}
+.rating-container > div {
+	display: inline-block;
+	padding-right: 14px;
+  font-size: 14px;
+  font-weight: 600;
+}

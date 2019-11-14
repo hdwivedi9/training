@@ -18,7 +18,6 @@ class Task extends Component {
   }
 
   onSubmit = (resolve = null) => {
-    //console.log(1);
     axios.get("http://localhost:8000/task/taskList").then(res => {
       this.setState(
         {
@@ -33,7 +32,6 @@ class Task extends Component {
   };
 
   onUpdate = (task, newData, oldData, resolve, reject) => {
-    //console.log(resolve);
     let flag = 0;
     if (task.title || task.description || task.due_date) {
       axios
@@ -77,9 +75,7 @@ class Task extends Component {
   };
 
   render() {
-    //console.log(1);
     var userID = this.props.user.sub;
-
     const columns = [
       {
         title: "ID",
@@ -317,7 +313,6 @@ class Task extends Component {
 const mapStateToProps = state => ({
   isAuth: state.auth.isAuthenticated,
   user: state.auth.user
-  //cookies: ownProps.cookies,
 });
 export default connect(
   mapStateToProps,

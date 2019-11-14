@@ -72,7 +72,7 @@ class Article extends Component {
 			<div className="container">
 
         <div className="button-container" style={{position: 'absolute', top:'171px', left:'45px', zIndex: 100}}>
-          <button className="btn btn-primary mb-5" onClick={this.handleShow}>New</button>  
+          <button className="btn btn-primary mb-5" disabled={!this.props.isAuth} onClick={this.handleShow}>New</button>  
            <Modal show={this.state.show} onHide={this.handleClose} size="lg">  
             <Modal.Dialog style={{width: '500px'}}>  
               <Modal.Header>  
@@ -133,8 +133,12 @@ class Article extends Component {
             	article.map((v,i) => {
                 return (
                   <article key={i} className="mb-3">
-                  <h2>{v.title}</h2>
-                    <section className="m-0">{v.body}</section>  
+                  <div><h2>{v.title}</h2>{v.created_by && (<span>By {v.created_by}</span>)}</div>
+                  <div className="rating-container" style={{paddingBottom: '4px', color: 'green'}}>
+                    <div>Avg Rating: 7</div>
+                    <div>Your Rating: 10</div>
+                  </div>
+                  <section className="m-0">{v.body}</section>  
                   <div>
                     {v.tags.map((v,i) => {
                       return (
@@ -155,6 +159,7 @@ class Article extends Component {
 const mapStateToProps = state => ({
   article: state.article.result,
   tag_count: state.article.tag_count,
+  isAuth: state.auth.isAuthenticated,
 });
 
 export default connect(
