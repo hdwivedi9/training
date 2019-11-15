@@ -26,9 +26,23 @@ class ArticleController extends Controller
         $result = $this->articleRepository->search($q);
 
         foreach($result as $k => $r){
-            $user = users::find($r['created_by']);
-            if(!is_null($user)){
-                $result[$k]['created_by'] = $user->name;
+            $avg_rating = Article::find($r['id'])->ratings()->avg('rating');
+            if(!is_null($avg_rating)){
+                $result[$k]['avg_rating'] = round($avg_rating, 2);
+            }
+
+            $creator = users::find($r['created_by']);
+            if(!is_null($creator)){
+                $result[$k]['created_by'] = $creator->name;
+            }
+
+            $user = $request->auth;
+            if(!empty($user)){
+                $curr_rating = $user->ratings->where('article_id', $r['id'])->first();
+
+                if(!is_null($curr_rating))
+                    $result[$k]['curr_rating'] = $curr_rating->rating;
+            
             }
         }
         $res['data'] = $result;

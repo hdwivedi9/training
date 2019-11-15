@@ -155,12 +155,13 @@ class Article extends Component {
                   <article key={i} className="mb-3">
                   <div><h2>{v.title}</h2>{v.created_by && (<span>By {v.created_by}</span>)}</div>
                   <div className="rating-container" style={{paddingBottom: '4px', color: 'green'}}>
-                    <div>Avg Rating: 7</div>
-                    <div>Your Rating: {v.cur_rating || 
+                    <div>Avg Rating: {v.avg_rating || '-'}</div>
+                    {this.props.isAuth &&
+                    <div>Your Rating: {v.curr_rating || 
                       <form onSubmit={this.ratingSubmit(v.id)} className="d-inline-block">
                         <input onChange={this.ratingChange(v.id)} style={{width: '50px', border: 'none'}}/>
                       </form>
-                    }</div>
+                    }</div>}
                   </div>
                   <section className="m-0">{v.body}</section>  
                   <div>

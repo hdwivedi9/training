@@ -17,13 +17,8 @@ class users extends Model
         'password', 'deleted_by', 'deleted_at'
     ];
 
-    // public function creator()
-    // {
-    //     return $this->hasMany('App\tasks', 'creator');
-    // }
-
-    // public function assignee()
-    // {
-    //     return $this->hasMany('App\tasks', 'assignee');
-    // }
+    public function ratings()
+    {
+        return $this->hasMany('App\Rating', 'given_by');
+    }
 }

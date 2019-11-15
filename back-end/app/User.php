@@ -29,4 +29,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    public function ratings()
+    {
+        return $this->hasMany('App\Rating', 'given_by');
+    }
 }
