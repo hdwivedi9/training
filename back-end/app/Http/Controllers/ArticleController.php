@@ -41,7 +41,7 @@ class ArticleController extends Controller
                 $curr_rating = $user->ratings->where('article_id', $r['id'])->first();
 
                 if(!is_null($curr_rating))
-                    $result[$k]['curr_rating'] = $curr_rating->rating;
+                    $result[$k]['curr_rating'] = round($curr_rating->rating, 2);
             
             }
         }
