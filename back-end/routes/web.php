@@ -18,18 +18,24 @@ use App\users;
 //});
 
 $router->group(['middleware' => 'jwt.auth'], function() use ($router) {
-        $router->get('/login/get_user', 'LoginController@get_user');
-        $router->post('/login/delete', 'LoginController@delete');
-        $router->post('/login/role_change', 'LoginController@role_change');
-        $router->post('/login/create_user', 'LoginController@create_user');
-        $router->post('/task/newTask', 'TaskController@newTask');
-        $router->post('/task/updateTask', 'TaskController@updateTask');
-        $router->post('/task/deleteTask', 'TaskController@deleteTask');
-        $router->post('/task/taskStatus', 'TaskController@taskStatus');
-        $router->get('/task/taskList', 'TaskController@taskList');
-        $router->get('/task', 'TaskController@highchart');
-    }
-);
+    $router->get('/login/get_user', 'LoginController@get_user');
+    $router->post('/login/delete', 'LoginController@delete');
+    $router->post('/login/role_change', 'LoginController@role_change');
+    $router->post('/login/create_user', 'LoginController@create_user');
+    $router->post('/task/newTask', 'TaskController@newTask');
+    $router->post('/task/updateTask', 'TaskController@updateTask');
+    $router->post('/task/deleteTask', 'TaskController@deleteTask');
+    $router->post('/task/taskStatus', 'TaskController@taskStatus');
+    $router->get('/task/taskList', 'TaskController@taskList');
+    $router->get('/task', 'TaskController@highchart');
+    $router->post('/newArticle', 'ArticleController@newArticle');
+    $router->post('/rate', 'ArticleController@newRating');
+});
+
+$router->group(['middleware' => 'article'], function() use ($router) {
+    $router->get('/article', 'ArticleController@search');
+    $router->get('/tags', 'ArticleController@groupByTags');
+});
 
 
 $router->post('/register', 'UsersController@register');
@@ -39,7 +45,3 @@ $router->post('/forget/new_pass', ['as'=> 'new_pass', 'uses'=>'ForgetController@
 
 $router->get('/sendMail', 'MailController@sendMail');
 $router->get('/sendMail/queue', 'MailController@queueMail');
-
-$router->get('/article', 'ArticleController@search');
-$router->post('/newArticle', 'ArticleController@newArticle');
-$router->get('/tags', 'ArticleController@groupByTags');

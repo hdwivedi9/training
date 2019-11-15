@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { search, newArticle, tags } from "../actions/articleSearch";
+import { search, newArticle, tags, rate } from "../actions/articleSearch";
 import { Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import _ from 'lodash';
@@ -24,6 +24,7 @@ class Article extends Component {
       body: '',
       tags: [],
       tag_count: 0,
+      rating: {},
     }
   }
   componentDidMount(){
@@ -50,7 +51,7 @@ class Article extends Component {
       [e.target.name]: e.target.value
     });
   }
-  articleSubmit = (e) => {
+  articleSubmit = e => {
     e.preventDefault();
     this.props.newArticle({
       title: this.state.title,
@@ -58,6 +59,25 @@ class Article extends Component {
       tags: this.state.tags,
     }).then(()=>{
       this.handleClose()
+    })
+  }
+  ratingChange = id => e => {
+    e.preventDefault()
+    let r = this.state.rating
+    r[id] = e.target.value
+    this.setState({
+      rating: r
+    });
+  }
+  ratingSubmit = id => e => {
+    e.preventDefault()
+    const { rating } = this.state
+    this.props.rate({
+      article: id,
+      rating: rating[id],
+    })
+    .then(()=> {
+      this.handleSubmit(e)
     })
   }
   handleSelect = val => {
@@ -136,7 +156,11 @@ class Article extends Component {
                   <div><h2>{v.title}</h2>{v.created_by && (<span>By {v.created_by}</span>)}</div>
                   <div className="rating-container" style={{paddingBottom: '4px', color: 'green'}}>
                     <div>Avg Rating: 7</div>
-                    <div>Your Rating: 10</div>
+                    <div>Your Rating: {v.cur_rating || 
+                      <form onSubmit={this.ratingSubmit(v.id)} className="d-inline-block">
+                        <input onChange={this.ratingChange(v.id)} style={{width: '50px', border: 'none'}}/>
+                      </form>
+                    }</div>
                   </div>
                   <section className="m-0">{v.body}</section>  
                   <div>
@@ -164,5 +188,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { search, newArticle, tags }
+  { search, newArticle, tags, rate }
 )(Article);

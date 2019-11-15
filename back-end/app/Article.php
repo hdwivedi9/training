@@ -7,8 +7,13 @@ use App\Search\Searchable;
 
 class Article extends Model
 {		
-		use Searchable;
-    protected $casts = [
-        'tags' => 'json',
-    ];
+	use Searchable;
+  protected $casts = [
+    'tags' => 'json',
+  ];
+
+  public function ratings()
+  {
+    return $this->hasMany('App\Rating');
+  }
 }

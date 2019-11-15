@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use App\Repositories\Interfaces\ArticleInterface;
 use App\Article;
+use App\Rating;
 use App\users;
 
 class ArticleController extends Controller
@@ -54,5 +55,18 @@ class ArticleController extends Controller
         $res['message'] = 'Query Successfull';
         return response($res, 200);
 
+    }
+
+    public function newRating(Request $request){
+        $user = $request->auth;
+        $rating  = new Rating;
+        $rating->article_id = $request->article;
+        $rating->rating = $request->rating;
+        $rating->given_by = $user->id;
+        $rating->save();
+
+        $res['success'] = true;
+        $res['message'] = 'Query Successfull';
+        return response($res, 200);
     }
 }
