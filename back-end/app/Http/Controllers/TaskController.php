@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TaskMail;
-use App\tasks;
-use App\users;
+use App\Task;
+use App\User;
 
 class TaskController extends Controller
 {
@@ -50,7 +50,7 @@ class TaskController extends Controller
             return TaskController::auth_response();
         }
 
-        $task = new tasks;
+        $task = new Task;
         $task->title = $request->title;
         $task->description = $request->description;
         $task->creator = $user->id;
@@ -59,7 +59,7 @@ class TaskController extends Controller
         $task->due_date = $request->due_date;
         $task->save();
 
-        $assignee = users::find($task->assignee);
+        $assignee = User::find($task->assignee);
         Mail::to($assignee->email)->later(1, new TaskMail($task, $user->name));
 
         $res['success'] = true;
@@ -82,7 +82,7 @@ class TaskController extends Controller
         $this->validate($request,$rules);
 
         $user = $request->auth;
-        $task = tasks::find($request->id);
+        $task = Task::find($request->id);
 
         if($user->id !== $task->creator){
             return TaskController::auth_response();
@@ -108,7 +108,7 @@ class TaskController extends Controller
         $this->validate($request,$rules);
 
         $user = $request->auth;
-        $task = tasks::find($request->id);
+        $task = Task::find($request->id);
 
         if($user->id !== $task->creator){
             return TaskController::auth_response();
@@ -130,7 +130,7 @@ class TaskController extends Controller
             'status'=> 'required|in:assigned,in-progress,completed'
         ];
         $this->validate($request,$rules);
-        $task = tasks::find($request->id);
+        $task = Task::find($request->id);
 
         $user = $request->auth;
 
@@ -205,7 +205,7 @@ class TaskController extends Controller
                 if(!is_null($assignee)) $query->where('v.name', 'LIKE','%'.$assignee.'%');       
             })->orderby('id')->get();
 
-        // $lists = tasks::
+        // $lists = Task::
 
         //     where(function($query) use ($user){
         //         if($user->role !== 'admin') $query->orWhere('creator', '=', $user->id)->orWhere('assignee', '=', $user->id);

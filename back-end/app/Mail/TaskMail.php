@@ -6,8 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use App\users;
-use App\tasks;
+use App\Task;
 
 class TaskMail extends Mailable
 {
@@ -21,7 +20,7 @@ class TaskMail extends Mailable
     protected $task;
     protected $name;
 
-    public function __construct(tasks $task, $name)
+    public function __construct(Task $task, $name)
     {
         $this->task = $task;
         $this->name = $name;

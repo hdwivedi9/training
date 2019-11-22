@@ -1,6 +1,5 @@
 <?php
 
-use App\users;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,7 +12,7 @@ use App\users;
 */
 
 //$router->get('/', function () use ($router) {
-//    $count = users::query()->get()->count();
+//    $count = User::query()->get()->count();
 //    return $count;
 //});
 

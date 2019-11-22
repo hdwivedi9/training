@@ -14,16 +14,16 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Cookie;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
-use App\users;
+use App\User;
 
 class LoginController extends Controller
 {
-    protected function jwt(users $users) {
+    protected function jwt(User $user) {
          $payload = [
             'iss' => "lumen-jwt",
-            'sub' => $users->id,
-            'role'=> $users->role,
-            'name'=> $users->name,
+            'sub' => $user->id,
+            'role'=> $user->role,
+            'name'=> $user->name,
             'type'=>"user",
             'iat' => time(),
             'exp' => time() + 3*60*60
@@ -47,7 +47,7 @@ class LoginController extends Controller
         $this->validate($request,$rules);
 
         $email = $request->email;
-        $user = users::where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
         if(Hash::check($request->password, $user->password)){
             $res['success'] = true;
@@ -79,7 +79,7 @@ class LoginController extends Controller
         $this->validate($request,$rules);
 
         $id=$request->id;
-        $user_del = users::find($id);
+        $user_del = User::find($id);
         
         $user_del->deleted_by=$user->id;
         $user_del->save();
@@ -109,7 +109,7 @@ class LoginController extends Controller
 
         $id=$request->id;
         $role = $request->role;
-        $user_role = users::find($id);
+        $user_role = User::find($id);
 
         $user_role->role=$role;
         $user_role->save();
@@ -145,7 +145,7 @@ class LoginController extends Controller
         $hasher = app()->make('hash');
         $password = $hasher->make($request->password);
 
-        $user = new users;
+        $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $password;

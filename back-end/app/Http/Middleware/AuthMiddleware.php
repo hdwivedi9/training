@@ -2,7 +2,7 @@
 namespace App\Http\Middleware;
 use Closure;
 use Exception;
-use App\users;
+use App\User;
 use Firebase\JWT\JWT;
 use Firebase\JWT\ExpiredException;
 
@@ -29,7 +29,7 @@ class AuthMiddleware
             return response($res,400);
         }
       
-        $user = users::find($credentials->sub);
+        $user = User::find($credentials->sub);
       
         if(!empty($user) && $credentials->type === "user"){
           

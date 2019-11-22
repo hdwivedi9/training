@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 use App\Repositories\Interfaces\ArticleInterface;
 use App\Article;
 use App\Rating;
-use App\users;
+use App\User;
 
 class ArticleController extends Controller
 {
@@ -31,7 +31,7 @@ class ArticleController extends Controller
                 $result[$k]['avg_rating'] = round($avg_rating, 2);
             }
 
-            $creator = users::find($r['created_by']);
+            $creator = User::find($r['created_by']);
             if(!is_null($creator)){
                 $result[$k]['created_by'] = $creator->name;
             }
@@ -63,6 +63,7 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->body = $request->body;
         $article->tags = $request->tags;
+        $article->created_by = $request->auth->id;
         $article->save();
 
         $res['success'] = true;

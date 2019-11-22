@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgetMail;
-use App\users;
+use App\User;
 
 class ForgetController extends Controller
 {
@@ -22,10 +22,10 @@ class ForgetController extends Controller
      * @return void
      */
 
-    protected function jwt(users $users) {
+    protected function jwt(User $user) {
          $payload = [
             'iss' => "lumen-jwt",
-            'sub' => $users->id,
+            'sub' => $user->id,
             'type'=>"forget",
             'iat' => time(),
             'exp' => time() + 3*60
@@ -47,7 +47,7 @@ class ForgetController extends Controller
         $this->validate($request,$rules);
 
         $email = $request->email;
-        $user = users::where('email', $email)->first();
+        $user = User::where('email', $email)->first();
 
 
         $res['success'] = true;
@@ -83,7 +83,7 @@ class ForgetController extends Controller
             return response($res,400);
         }
       
-        $user = users::find($credentials->sub);
+        $user = User::find($credentials->sub);
       
         if(empty($user) || $credentials->type !== "forget"){
           

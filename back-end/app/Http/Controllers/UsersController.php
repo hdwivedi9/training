@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeMail;
-use App\users;
+use App\User;
 
 class UsersController extends Controller
 {
@@ -38,7 +38,7 @@ class UsersController extends Controller
         $hasher = app()->make('hash');
         $password = $hasher->make($request->password);
 
-        $user = new users;
+        $user = new User;
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = $password;
