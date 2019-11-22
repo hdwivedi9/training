@@ -28,10 +28,33 @@ class ElasticsearchRepository implements ArticleInterface
         ]);
     }
 
+    public function updateArticle(Article $article)
+    {
+        $r = $article->ratings->toJson();
+        $this->elasticsearch->updateByQuery([
+            'index' => $article->getSearchIndex(),
+            'type' => $article->getSearchType(),
+            'body' => [
+                'query' => [
+                    'term' => [
+                        'id' => $article->getKey(),
+                    ],
+                ],
+                "script" => [
+                    "source" => "ctx._source.ratings = params.r",
+                    "params" => [
+                        "r" => $r, 
+                    ]
+                ]
+            ]
+        ]);
+    }
+
     public function search(string $query = ''): array
     {
         $model = new Article;
-
+        // $r = $model->ratings->toJson();
+        // dd($r);
         if($query === ''){
             $items = $this->elasticsearch->search([
                 'index' => $model->getSearchIndex(),

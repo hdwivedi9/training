@@ -18,9 +18,14 @@ class ElasticsearchObserver
         $this->elasticsearch = $elasticsearch;
     }
 
-    public function saved($model)
+    public function created($model)
     {
-        Queue::push(new ArticleJob($model));
+        Queue::push(new ArticleJob($model, 1));
+    }
+
+    public function updated($model)
+    {
+        Queue::push(new ArticleJob($model, 0));
     }
 
     public function deleted($model)

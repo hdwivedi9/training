@@ -7,11 +7,12 @@ use App\Repositories\ElasticsearchRepository;
 
 class ArticleJob extends Job
 {
-    private $article;
+    private $article, $sav;
 
-    public function __construct(Article $article)
+    public function __construct(Article $article, $sav)
     {
         $this->article = $article;
+        $this->$sav = $sav;
     }
 
     /**
@@ -21,6 +22,8 @@ class ArticleJob extends Job
      */
     public function handle(ElasticsearchRepository $elasticRepo)
     {   
-        $elasticRepo->newArticle($this->article);
+        if($this->sav)
+            $elasticRepo->newArticle($this->article);
+        else $elasticRepo->updateArticle($this->article);
     }
 }

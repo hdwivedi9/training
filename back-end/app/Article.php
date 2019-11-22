@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Search\Searchable;
+use App\Traits\Searchable;
 
 class Article extends Model
 {		

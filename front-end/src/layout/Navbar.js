@@ -13,8 +13,7 @@ class Navbar extends Component {
     this.props.logout(this.props.cookies, this.props.history);
   }
   render() {
-    const { isAuth } = this.props;
-    //console.log(this.props.isAuth);
+    const { isAuth, user } = this.props;
     const loginLinks = (
       <ul className="navbar-nav ml-auto" style={{ paddingLeft: "250px" }}>
         <ul className="nav-item ml-auto" style={{ display: "inline-block" }}>
@@ -80,11 +79,13 @@ class Navbar extends Component {
             color: "#f78b8b",
             fontWeight: "bold",
             paddingLeft: "35px",
-            paddingRight: "800px"
+            paddingRight: "550px"
           }}
         >
           Articles
         </Link>
+        <span style={{fontSize: 'x-large', fontVariant: 'small-caps', fontFamily: 'initial', fontWeight: 'bold'}}>
+        {user && user.name}</span>
         <div
           className="collapse navbar-collapse ml-auto"
           id="navbarSupportedContent"

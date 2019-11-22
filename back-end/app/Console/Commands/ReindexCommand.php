@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Article;
+use App\Rating;
 use Elasticsearch\Client;
 use Illuminate\Console\Command;
 
@@ -46,8 +47,9 @@ class ReindexCommand extends Command
     {
         $this->info('Indexing all articles. This might take a while...');
 
-        foreach (Article::cursor() as $article)
+        foreach (Article::with('ratings:article_id,rating,given_by')->get() as $article)
         {
+            unset($article['created_at'], $article['updated_at']);
             $this->elasticsearch->index([
                 'index' => $article->getSearchIndex(),
                 'type' => $article->getSearchType(),
