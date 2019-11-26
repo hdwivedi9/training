@@ -20,6 +20,10 @@ export const tags = () => dispatch => {
   })
 }
 
-export const rate = ({...params}) => dispatch => {
-  return axios.post('http://localhost:8000/rate', { ...params })
+export const newRating = ({...params}) => dispatch => {
+  return axios.post('http://localhost:8000/newRating', { ...params })
+}
+
+export const updateRating = ({...params}) => dispatch => {
+  return axios.post('http://localhost:8000/updateRating', { ...params })
 }

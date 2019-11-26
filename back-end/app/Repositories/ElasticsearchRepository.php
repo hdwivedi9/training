@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Article;
+use App\Rating;
 use Elasticsearch\Client;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Collection;
@@ -28,9 +29,10 @@ class ElasticsearchRepository implements ArticleInterface
         ]);
     }
 
-    public function updateArticle(Article $article)
+    public function updateRating(Rating $rating)
     {
-        $r = $article->ratings->toJson();
+        $article = Article::find($rating->article_id);
+        $r = $article->ratings->toArray();
         $this->elasticsearch->updateByQuery([
             'index' => $article->getSearchIndex(),
             'type' => $article->getSearchType(),
@@ -53,8 +55,6 @@ class ElasticsearchRepository implements ArticleInterface
     public function search(string $query = ''): array
     {
         $model = new Article;
-        // $r = $model->ratings->toJson();
-        // dd($r);
         if($query === ''){
             $items = $this->elasticsearch->search([
                 'index' => $model->getSearchIndex(),

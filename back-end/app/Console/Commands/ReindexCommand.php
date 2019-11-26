@@ -47,7 +47,7 @@ class ReindexCommand extends Command
     {
         $this->info('Indexing all articles. This might take a while...');
 
-        foreach (Article::with('ratings:article_id,rating,given_by')->get() as $article)
+        foreach (Article::with('ratings')->get() as $article)
         {
             unset($article['created_at'], $article['updated_at']);
             $this->elasticsearch->index([

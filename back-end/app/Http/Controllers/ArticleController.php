@@ -24,7 +24,6 @@ class ArticleController extends Controller
         $q = $request->searchQuery;
         if($q === null) $q = '';
         $result = $this->articleRepository->search($q);
-
         foreach($result as $k => $r){
             $avg_rating = Article::find($r['id'])->ratings()->avg('rating');
             if(!is_null($avg_rating)){
@@ -78,6 +77,16 @@ class ArticleController extends Controller
         $rating->article_id = $request->article;
         $rating->rating = $request->rating;
         $rating->given_by = $user->id;
+        $rating->save();
+
+        $res['success'] = true;
+        $res['message'] = 'Query Successfull';
+        return response($res, 200);
+    }
+
+    public function updateRating(Request $request){
+        $rating = Rating::where('article_id', $request->article)->first();
+        $rating->rating = $request->rating;
         $rating->save();
 
         $res['success'] = true;

@@ -28,7 +28,8 @@ $router->group(['middleware' => 'jwt.auth'], function() use ($router) {
     $router->get('/task/taskList', 'TaskController@taskList');
     $router->get('/task', 'TaskController@highchart');
     $router->post('/newArticle', 'ArticleController@newArticle');
-    $router->post('/rate', 'ArticleController@newRating');
+    $router->post('/newRating', 'ArticleController@newRating');
+    $router->post('/updateRating', 'ArticleController@updateRating');
 });
 
 $router->group(['middleware' => 'article'], function() use ($router) {

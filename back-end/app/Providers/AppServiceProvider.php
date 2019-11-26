@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
+use App\Observers\RatingObserver;
+use App\Rating;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -36,5 +38,10 @@ class AppServiceProvider extends ServiceProvider
                 ->setHosts($app['config']->get('services.search.hosts'))
                 ->build();
         });
+    }
+
+    public function boot()
+    {
+        Rating::observe(RatingObserver::class);
     }
 }

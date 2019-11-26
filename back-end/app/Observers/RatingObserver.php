@@ -2,13 +2,11 @@
 
 namespace App\Observers;
 
-use App\Article;
 use Elasticsearch\Client;
-use App\Jobs\ArticleJob;
+use App\Jobs\RatingJob;
 use Illuminate\Support\Facades\Queue;
-use Carbon\Carbon;
 
-class ElasticsearchObserver
+class RatingObserver
 {
     /** @var \Elasticsearch\Client */
     private $elasticsearch;
@@ -20,15 +18,11 @@ class ElasticsearchObserver
 
     public function saved($model)
     {
-        Queue::push(new ArticleJob($model));
+        Queue::push(new RatingJob($model));
     }
 
     public function deleted($model)
     {
-        $this->elasticsearch->delete([
-            'index' => $model->getSearchIndex(),
-            'type' => $model->getSearchType(),
-            'id' => $model->getKey(),
-        ]);
+        Queue::push(new RatingJob($model));
     }
 }

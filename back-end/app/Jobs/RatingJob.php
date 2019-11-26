@@ -2,16 +2,16 @@
 
 namespace App\Jobs;
 
-use App\Article;
+use App\Rating;
 use App\Repositories\ElasticsearchRepository;
 
-class ArticleJob extends Job
+class RatingJob extends Job
 {
-    private $article;
+    private $rating;
 
-    public function __construct(Article $article)
+    public function __construct(Rating $rating)
     {
-        $this->article = $article;
+        $this->rating = $rating;
     }
 
     /**
@@ -21,6 +21,6 @@ class ArticleJob extends Job
      */
     public function handle(ElasticsearchRepository $elasticRepo)
     {   
-        $elasticRepo->newArticle($this->article);
+        $elasticRepo->updateRating($this->rating);
     }
 }

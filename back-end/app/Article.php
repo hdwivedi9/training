@@ -14,6 +14,6 @@ class Article extends Model
 
   public function ratings()
   {
-    return $this->hasMany('App\Rating');
+    return $this->hasMany('App\Rating')->select(array('id', 'article_id', 'rating', 'given_by'));
   }
 }

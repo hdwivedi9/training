@@ -20,7 +20,7 @@ class User extends Model
 
     public function ratings()
     {
-        return $this->hasMany('App\Rating', 'given_by');
+        return $this->hasMany('App\Rating', 'given_by')->select(array('id', 'article_id', 'rating', 'given_by'));
     }
 }
 

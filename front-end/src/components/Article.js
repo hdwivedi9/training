@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { search, newArticle, tags, rate } from "../actions/articleSearch";
+import { search, newArticle, tags, newRating, updateRating } from "../actions/articleSearch";
 import { Button, Modal } from "react-bootstrap";
 import Select from "react-select";
 import _ from 'lodash';
 import './style.css';
 
 const options = [
-  {value: 'php', label: 'php'},
-  {value: 'java', label: 'java'},
-  {value: 'ruby', label: 'ruby'},
-  {value: 'bash', label: 'bash'},
-  {value: 'javascript', label: 'javascript'},
+  { value: 'php', label: 'php' },
+  { value: 'java', label: 'java' },
+  { value: 'ruby', label: 'ruby' },
+  { value: 'bash', label: 'bash' },
+  { value: 'javascript', label: 'javascript' },
 ]
 
 class Article extends Component {
@@ -25,6 +25,7 @@ class Article extends Component {
       tags: [],
       tag_count: 0,
       rating: {},
+      p: false,
     }
   }
   componentDidMount(){
@@ -69,10 +70,20 @@ class Article extends Component {
       rating: r
     });
   }
-  ratingSubmit = id => e => {
+  ratingSubmit = v => e => {
     e.preventDefault()
     const { rating } = this.state
-    this.props.rate({
+    let id = v.id
+    v.edit = false
+    if(v.curr_rating)
+      this.props.updateRating({
+        article: id,
+        rating: rating[id],
+      })
+      .then(()=> {
+        this.handleSubmit(e)
+      })
+    else this.props.newRating({
       article: id,
       rating: rating[id],
     })
@@ -153,14 +164,37 @@ class Article extends Component {
             	article.map((v,i) => {
                 return (
                   <article key={i} className="mb-3">
-                  <div><h2>{v.title}</h2>{v.created_by && (<span>By {v.created_by}</span>)}</div>
+                  <div>
+                    <h2>{v.title}</h2>
+                    {v.created_by && (<span>By {v.created_by}</span>)
+                  }</div>
                   <div className="rating-container" style={{paddingBottom: '4px', color: 'green'}}>
                     <div>Avg Rating: {v.avg_rating || '-'}</div>
                     {this.props.isAuth &&
-                    <div>Your Rating: {v.curr_rating || 
-                      <form onSubmit={this.ratingSubmit(v.id)} className="d-inline-block">
-                        <input onChange={this.ratingChange(v.id)} style={{width: '50px', border: 'none'}}/>
-                      </form>
+                    <div>Your Rating: {v.curr_rating && !v.edit ?
+                      <span>
+                        {v.curr_rating}
+                        <button className="btn btn-info btn-sm p-1 ml-3" 
+                          onClick={()=>{
+                            v.edit = true
+                            this.setState({p: !this.state.p})
+                          }}>Edit
+                        </button>
+                      </span>
+                      :
+                      <div>
+                        <form onSubmit={this.ratingSubmit(v)} className="d-inline-block">
+                          <input placeholder={v.curr_rating} onChange={this.ratingChange(v.id)} style={{width: '50px', border: 'none'}}/>
+                        </form>
+                        {v.curr_rating && 
+                        <button className="btn btn-warning btn-sm p-1 ml-3" 
+                          onClick={()=>{
+                            v.edit = false
+                            this.setState({p: !this.state.p})
+                          }}>Cancel
+                        </button>
+                        }
+                      </div>
                     }</div>}
                   </div>
                   <section className="m-0">{v.body}</section>  
@@ -189,5 +223,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { search, newArticle, tags, rate }
+  { search, newArticle, tags, newRating, updateRating }
 )(Article);
