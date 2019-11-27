@@ -85,7 +85,8 @@ class ArticleController extends Controller
     }
 
     public function updateRating(Request $request){
-        $rating = Rating::where('article_id', $request->article)->first();
+        $user = $request->auth;
+        $rating = Rating::where('article_id', $request->article)->where('given_by', $user->id)->first();
         $rating->rating = $request->rating;
         $rating->save();
 

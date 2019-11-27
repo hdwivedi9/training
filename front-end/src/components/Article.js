@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { search, newArticle, tags, newRating, updateRating } from "../actions/articleSearch";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Dropdown, DropdownButton} from "react-bootstrap";
 import Select from "react-select";
 import _ from 'lodash';
 import './style.css';
@@ -14,6 +14,12 @@ const options = [
   { value: 'javascript', label: 'javascript' },
 ]
 
+const dataOptions = {
+  sort: [ 'score', 'title', 'avg_rating', 'rating'],
+  order: [ 'asc', 'desc'],
+  filter: [ 'none' ]
+}
+
 class Article extends Component {
   constructor (props){
     super(props);
@@ -25,6 +31,7 @@ class Article extends Component {
       tags: [],
       tag_count: 0,
       rating: {},
+      range: { min: 4, max: 6 },
       p: false,
     }
   }
@@ -36,7 +43,7 @@ class Article extends Component {
     this.setState({[e.target.name]: e.target.value})
   }
   handleSubmit = e => {
-    e.preventDefault();
+    if(e) e.preventDefault();
     this.props.search({
       searchQuery: this.state.q
     })
@@ -81,14 +88,14 @@ class Article extends Component {
         rating: rating[id],
       })
       .then(()=> {
-        this.handleSubmit(e)
+        this.handleSubmit()
       })
     else this.props.newRating({
       article: id,
       rating: rating[id],
     })
     .then(()=> {
-      this.handleSubmit(e)
+      this.handleSubmit()
     })
   }
   handleSelect = val => {
@@ -143,8 +150,27 @@ class Article extends Component {
         </div>
         
         <div className="card article">
-            <div className="card-header">
+            <div className="card-header position-relative">
                 Articles <small>({article.length})</small>
+                <div className="sort-filter-container">
+                  <div className="filter px-3">
+                    <DropdownButton title='Filter' variant="primary" size="sm">
+                      {dataOptions.filter.map(v=><Dropdown.Item>{v}</Dropdown.Item>)}
+                    </DropdownButton>
+                  </div>
+                  <div className="sort px-3">
+                    <div className="px-2">
+                      <DropdownButton title='Sort' variant="primary" size="sm">
+                        {dataOptions.sort.map(v=><Dropdown.Item>{v}</Dropdown.Item>)}
+                      </DropdownButton>
+                    </div>
+                    <div className="px-2">
+                      <DropdownButton title='Order' variant="secondary" size="sm">
+                        {dataOptions.order.map(v=><Dropdown.Item>{v}</Dropdown.Item>)}
+                      </DropdownButton>
+                    </div>
+                  </div>
+                </div>
             </div>
             <div className="card-body" style={{background: 'aliceblue'}}>
               <form onSubmit={this.handleSubmit}>
@@ -182,7 +208,7 @@ class Article extends Component {
                         </button>
                       </span>
                       :
-                      <div>
+                      <span>
                         <form onSubmit={this.ratingSubmit(v)} className="d-inline-block">
                           <input placeholder={v.curr_rating} onChange={this.ratingChange(v.id)} style={{width: '50px', border: 'none'}}/>
                         </form>
@@ -194,7 +220,7 @@ class Article extends Component {
                           }}>Cancel
                         </button>
                         }
-                      </div>
+                      </span>
                     }</div>}
                   </div>
                   <section className="m-0">{v.body}</section>  

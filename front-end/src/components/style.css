@@ -24,3 +24,29 @@ h2 + span {
   font-size: 14px;
   font-weight: 600;
 }
+
+.sort-filter-container {
+	display: inline-block;
+	position: absolute;
+	right: 1rem;
+	width: 30%;
+}
+
+.sort-filter-container .sort {
+	display: inline-block;
+	width: 60%;
+}
+
+.sort-filter-container .sort > div {
+	display: inline-block;
+	width: 50%;
+}
+
+.sort-filter-container .filter {
+	display: inline-block;
+	width: 40%;
+}
+
+.select-small {
+	height: 10px;
+}
