@@ -52,7 +52,7 @@ class ElasticsearchRepository implements ArticleInterface
         ]);
     }
 
-    public function search(string $query = ''): array
+    public function search(string $query = '', array $sort = []): array
     {
         $model = new Article;
         if($query === ''){
@@ -61,6 +61,7 @@ class ElasticsearchRepository implements ArticleInterface
                 'type' => $model->getSearchType(),
                 'body' => [
                     'size' => 100,
+                    'sort' => $sort,
                 ],
             ]);
         }
@@ -77,6 +78,7 @@ class ElasticsearchRepository implements ArticleInterface
                             'default_operator' => 'or',
                         ],
                     ],
+                    'sort' => $sort,
                 ],
             ]);
         }

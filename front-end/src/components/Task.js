@@ -82,7 +82,7 @@ class Task extends Component {
         field: "id",
         type: "numeric",
         hidden: true,
-        editable: false,
+        editable: 'never',
         cellStyle: {
           color: "white",
           border: "2px solid #454d55",

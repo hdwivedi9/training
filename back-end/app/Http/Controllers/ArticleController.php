@@ -22,8 +22,25 @@ class ArticleController extends Controller
 
     public function search(Request $request){
         $q = $request->searchQuery;
+        $user = $request->auth;
+        $sortBy = $request->sort;
+        $order = $request->order;
+        $sort = ['_score' => $order];
         if($q === null) $q = '';
-        $result = $this->articleRepository->search($q);
+        if($order === null) $order = 'desc';
+        if($sortBy === 'avg_rating') 
+            $sort = [
+                ['ratings.rating' => ['mode' => 'avg', 'order' => $order, 'nested' => ['path' => 'ratings']]]
+            ];
+        else if($sortBy === 'title')
+            $sort = [
+                ['title.keyword' => $order]
+            ];
+        else if($sortBy === 'my_rating' && $user !== null) 
+            $sort = [
+                ['ratings.rating' => ['order' => $order, 'nested' => ['path' => 'ratings', 'filter' => ['term' => ['ratings.given_by' => $user->id]]]]]
+            ];
+        $result = $this->articleRepository->search($q, $sort);
         foreach($result as $k => $r){
             $avg_rating = Article::find($r['id'])->ratings()->avg('rating');
             if(!is_null($avg_rating)){

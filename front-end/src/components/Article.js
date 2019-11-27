@@ -15,7 +15,7 @@ const options = [
 ]
 
 const dataOptions = {
-  sort: [ 'score', 'title', 'avg_rating', 'rating'],
+  sort: [ 'score', 'title', 'avg_rating', 'my_rating'],
   order: [ 'asc', 'desc'],
   filter: [ 'none' ]
 }
@@ -31,7 +31,8 @@ class Article extends Component {
       tags: [],
       tag_count: 0,
       rating: {},
-      range: { min: 4, max: 6 },
+      activeSort: 0,
+      activeOrder: 1,
       p: false,
     }
   }
@@ -45,7 +46,9 @@ class Article extends Component {
   handleSubmit = e => {
     if(e) e.preventDefault();
     this.props.search({
-      searchQuery: this.state.q
+      searchQuery: this.state.q,
+      sort: dataOptions.sort[this.state.activeSort],
+      order: dataOptions.order[this.state.activeOrder],
     })
   }
   handleClose = () => {
@@ -103,8 +106,15 @@ class Article extends Component {
       tags: val.map(v => v.value)
     });
   }
+  selectSort = v => {
+    this.setState({activeSort: parseInt(v)}, ()=> this.handleSubmit())
+  }
+  selectOrder = v => {
+    this.setState({activeOrder: parseInt(v)}, ()=> this.handleSubmit())
+  }
   render() {
   	const { article, tag_count } = this.props
+    const { activeSort, activeOrder } = this.state
     if(!article) return null
     return (
 			<div className="container">
@@ -155,18 +165,18 @@ class Article extends Component {
                 <div className="sort-filter-container">
                   <div className="filter px-3">
                     <DropdownButton title='Filter' variant="primary" size="sm">
-                      {dataOptions.filter.map(v=><Dropdown.Item>{v}</Dropdown.Item>)}
+                      {dataOptions.filter.map((v,i)=><Dropdown.Item disabled key={i}>{v}</Dropdown.Item>)}
                     </DropdownButton>
                   </div>
                   <div className="sort px-3">
                     <div className="px-2">
                       <DropdownButton title='Sort' variant="primary" size="sm">
-                        {dataOptions.sort.map(v=><Dropdown.Item>{v}</Dropdown.Item>)}
+                        {dataOptions.sort.map((v,i)=><Dropdown.Item active={i===activeSort} disabled={!this.props.isAuth && i===3} onSelect={this.selectSort} eventKey={i} key={i}>{v}</Dropdown.Item>)}
                       </DropdownButton>
                     </div>
                     <div className="px-2">
                       <DropdownButton title='Order' variant="secondary" size="sm">
-                        {dataOptions.order.map(v=><Dropdown.Item>{v}</Dropdown.Item>)}
+                        {dataOptions.order.map((v,i)=><Dropdown.Item active={i===activeOrder} onSelect={this.selectOrder} eventKey={i} key={i}>{v}</Dropdown.Item>)}
                       </DropdownButton>
                     </div>
                   </div>
