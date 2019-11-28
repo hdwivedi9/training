@@ -85,7 +85,8 @@ class ArticleController extends Controller
     }
 
     public function groupByTags(){
-        $result = $this->articleRepository->groupByTags();
+        //$result = $this->articleRepository->groupByTags();
+        $result = DB::select("SELECT tag, COUNT(*) AS doc_count FROM articles, JSON_TABLE( tags, '$[*]' COLUMNS( tag varchar(20) PATH '$' ) ) AS data GROUP BY tag ORDER BY doc_count DESC");
         $res['data'] = $result;
         return response($res, 200);
     }

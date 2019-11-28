@@ -153,7 +153,7 @@ class Article extends Component {
               <tbody>
                 {tag_count.map((v,i) => (
                   <tr key={i}>
-                    <td>{v.key}</td>
+                    <td>{v.tag || v.key}</td>
                     <td>{v.doc_count}</td>
                   </tr>
                 ))}
