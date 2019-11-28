@@ -21,13 +21,22 @@ class ArticleController extends Controller
     }
 
     public function search(Request $request){
+
         $q = $request->searchQuery;
         $user = $request->auth;
         $sortBy = $request->sort;
         $order = $request->order;
-        $sort = ['_score' => $order];
+        $min = $request->min;
+        $max = $request->max;
+
         if($q === null) $q = '';
         if($order === null) $order = 'desc';
+        if($min === null) $min = 0;
+        if($max === null) $max = 10;
+
+        $sort = ['_score' => $order];
+        $filter = ['match_all' => (object)[]];
+
         if($sortBy === 'avg_rating') 
             $sort = [
                 ['ratings.rating' => ['mode' => 'avg', 'order' => $order, 'nested' => ['path' => 'ratings']]]
@@ -40,7 +49,14 @@ class ArticleController extends Controller
             $sort = [
                 ['ratings.rating' => ['order' => $order, 'nested' => ['path' => 'ratings', 'filter' => ['term' => ['ratings.given_by' => $user->id]]]]]
             ];
-        $result = $this->articleRepository->search($q, $sort);
+
+        if($min > 0 || $max < 10)
+            $filter = [
+                'nested' => ['path' => 'ratings', 'query' => ['bool' => ['filter' => [['term' => ['ratings.given_by' => $user->id]], ['range' => ['ratings.rating' => ['gte' => $min, 'lte' => $max]]]]]]]
+            ];
+
+        $result = $this->articleRepository->search($q, $sort, $filter);
+
         foreach($result as $k => $r){
             $avg_rating = Article::find($r['id'])->ratings()->avg('rating');
             if(!is_null($avg_rating)){

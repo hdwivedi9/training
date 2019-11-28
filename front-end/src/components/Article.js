@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { search, newArticle, tags, newRating, updateRating } from "../actions/articleSearch";
 import { Button, Modal, Dropdown, DropdownButton} from "react-bootstrap";
 import Select from "react-select";
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
 import _ from 'lodash';
 import './style.css';
 
@@ -17,7 +19,6 @@ const options = [
 const dataOptions = {
   sort: [ 'score', 'title', 'avg_rating', 'my_rating'],
   order: [ 'asc', 'desc'],
-  filter: [ 'none' ]
 }
 
 class Article extends Component {
@@ -33,6 +34,7 @@ class Article extends Component {
       rating: {},
       activeSort: 0,
       activeOrder: 1,
+      filter: { min: 0, max: 10 },
       p: false,
     }
   }
@@ -49,6 +51,8 @@ class Article extends Component {
       searchQuery: this.state.q,
       sort: dataOptions.sort[this.state.activeSort],
       order: dataOptions.order[this.state.activeOrder],
+      min: this.state.filter.min,
+      max: this.state.filter.max,
     })
   }
   handleClose = () => {
@@ -118,7 +122,6 @@ class Article extends Component {
     if(!article) return null
     return (
 			<div className="container">
-
         <div className="button-container" style={{position: 'absolute', top:'171px', left:'45px', zIndex: 100}}>
           <button className="btn btn-primary mb-5" disabled={!this.props.isAuth} onClick={this.handleShow}>New</button>  
            <Modal show={this.state.show} onHide={this.handleClose} size="lg">  
@@ -165,7 +168,17 @@ class Article extends Component {
                 <div className="sort-filter-container">
                   <div className="filter px-3">
                     <DropdownButton title='Filter' variant="primary" size="sm">
-                      {dataOptions.filter.map((v,i)=><Dropdown.Item disabled key={i}>{v}</Dropdown.Item>)}
+                      <div className="mx-3 mb-3">
+                        <div className="pb-4" style={{fontSize: '15px', textAlign: 'center'}}>My Rating Range</div>
+                        <InputRange
+                          maxValue={10}
+                          minValue={0}
+                          step={0.1}
+                          formatLabel={v => v.toFixed(1)}
+                          value={this.state.filter}
+                          onChange={v => this.setState({ filter: v })}
+                        />
+                      </div>
                     </DropdownButton>
                   </div>
                   <div className="sort px-3">
