@@ -167,7 +167,7 @@ class Article extends Component {
                 Articles <small>({article.length})</small>
                 <div className="sort-filter-container">
                   <div className="filter px-3">
-                    <DropdownButton title='Filter' variant="primary" size="sm">
+                    <DropdownButton title='Filter' variant="primary" size="sm" disabled={!this.props.isAuth}>
                       <div className="mx-3 mb-3">
                         <div className="pb-4" style={{fontSize: '15px', textAlign: 'center'}}>My Rating Range</div>
                         <InputRange
