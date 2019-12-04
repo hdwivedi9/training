@@ -30,6 +30,7 @@ $router->group(['middleware' => 'jwt.auth'], function() use ($router) {
     $router->post('/newArticle', 'ArticleController@newArticle');
     $router->post('/newRating', 'ArticleController@newRating');
     $router->post('/updateRating', 'ArticleController@updateRating');
+    $router->post('/broadcasting/auth', 'BroadcastController@authenticate');
 });
 
 $router->group(['middleware' => 'article'], function() use ($router) {
