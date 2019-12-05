@@ -55,7 +55,7 @@ class Article extends Component {
       authEndpoint: 'http://localhost:8000/broadcasting/auth',
       forceTLS: true,
     });
-    const channel = socket.subscribe('article');
+    const channel = socket.subscribe('private-article');
     channel.bind('App\\Events\\NewArticleEvent', data => {
       this.handleSubmit()
       this.props.tags()
@@ -229,54 +229,56 @@ class Article extends Component {
                     <button className="btn btn-primary ml-auto">Search</button>
                   </div>
                 </form>
-              {_.isEmpty(article) ? <p>No articles found</p> :
-            	article.map((v,i) => {
-                return (
-                  <article key={i} className="mb-3">
-                  <div>
-                    <h2>{v.title}</h2>
-                    {v.created_by && (<span>By {v.created_by}</span>)
-                  }</div>
-                  <div className="rating-container" style={{paddingBottom: '4px', color: 'green'}}>
-                    <div>Avg Rating: {v.avg_rating || '-'}</div>
-                    {this.props.isAuth &&
-                    <div>Your Rating: {v.curr_rating && !v.edit ?
-                      <span>
-                        {v.curr_rating}
-                        <button className="btn btn-info btn-sm p-1 ml-3" 
-                          onClick={()=>{
-                            v.edit = true
-                            this.setState({p: !this.state.p})
-                          }}>Edit
-                        </button>
-                      </span>
-                      :
-                      <span>
-                        <form onSubmit={this.ratingSubmit(v)} className="d-inline-block">
-                          <input placeholder={v.curr_rating} onChange={this.ratingChange(v.id)} style={{width: '50px', border: 'none'}}/>
-                        </form>
-                        {v.curr_rating && 
-                        <button className="btn btn-warning btn-sm p-1 ml-3" 
-                          onClick={()=>{
-                            v.edit = false
-                            this.setState({p: !this.state.p})
-                          }}>Cancel
-                        </button>
-                        }
-                      </span>
-                    }</div>}
-                  </div>
-                  <section className="m-0">{v.body}</section>  
-                  <div>
-                    {v.tags.map((v,i) => {
-                      return (
-                        <span key={i} className="badge badge-dark mr-1">{v}</span>
-                      )
-                    })}
-                  </div>
-                  </article>
-                )
-              })}
+              <div className="article-container">
+                {_.isEmpty(article) ? <p>No articles found</p> :
+              	article.map((v,i) => {
+                  return (
+                    <article key={i} className="mb-3">
+                    <div>
+                      <h2>{v.title}</h2>
+                      {v.created_by && (<span>By {v.created_by}</span>)
+                    }</div>
+                    <div className="rating-container" style={{paddingBottom: '4px', color: 'green'}}>
+                      <div>Avg Rating: {v.avg_rating || '-'}</div>
+                      {this.props.isAuth &&
+                      <div>Your Rating: {v.curr_rating && !v.edit ?
+                        <span>
+                          {v.curr_rating}
+                          <button className="btn btn-info btn-sm p-1 ml-3" 
+                            onClick={()=>{
+                              v.edit = true
+                              this.setState({p: !this.state.p})
+                            }}>Edit
+                          </button>
+                        </span>
+                        :
+                        <span>
+                          <form onSubmit={this.ratingSubmit(v)} className="d-inline-block">
+                            <input placeholder={v.curr_rating} onChange={this.ratingChange(v.id)} style={{width: '50px', border: 'none'}}/>
+                          </form>
+                          {v.curr_rating && 
+                          <button className="btn btn-warning btn-sm p-1 ml-3" 
+                            onClick={()=>{
+                              v.edit = false
+                              this.setState({p: !this.state.p})
+                            }}>Cancel
+                          </button>
+                          }
+                        </span>
+                      }</div>}
+                    </div>
+                    <section className="m-0">{v.body}</section>  
+                    <div>
+                      {v.tags.map((v,i) => {
+                        return (
+                          <span key={i} className="badge badge-dark mr-1">{v}</span>
+                        )
+                      })}
+                    </div>
+                    </article>
+                  )
+                })}
+              </div>
             </div>
         </div>
     </div>

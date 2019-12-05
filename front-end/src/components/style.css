@@ -5,6 +5,10 @@ td, tr {
 	max-width: 1000px;
 	margin-left: 100px;
 }
+.article-container {
+	overflow: scroll;
+	max-height: 69vh;
+}
 .button-container{
 	text-align: center;
 }

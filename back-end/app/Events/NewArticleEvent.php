@@ -4,6 +4,7 @@ namespace App\Events;
 
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class NewArticleEvent implements ShouldBroadcast
@@ -29,6 +30,6 @@ class NewArticleEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['article'];
+        return new PrivateChannel('article');
     }
 }
