@@ -4,9 +4,18 @@ import { search, newArticle, tags, newRating, updateRating } from "../actions/ar
 import { Button, Modal, Dropdown, DropdownButton} from "react-bootstrap";
 import Select from "react-select";
 import InputRange from 'react-input-range';
+import Pusher from 'pusher-js';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import 'react-input-range/lib/css/index.css';
 import _ from 'lodash';
 import './style.css';
+
+const APP_KEY = '6ed67f107e6261ea840f'
+const APP_CLUSTER = 'ap2'
+Pusher.logToConsole = true
+
+toast.configure()
 
 const options = [
   { value: 'php', label: 'php' },
@@ -37,10 +46,21 @@ class Article extends Component {
       filter: { min: 0, max: 10 },
       p: false,
     }
+    props.search()
+    props.tags()
   }
   componentDidMount(){
-    this.props.search();
-    this.props.tags();
+    const socket = new Pusher(APP_KEY, {
+      cluster: APP_CLUSTER,
+      authEndpoint: 'http://localhost:8000/broadcasting/auth',
+      forceTLS: true,
+    });
+    const channel = socket.subscribe('article');
+    channel.bind('App\\Events\\NewArticleEvent', data => {
+      this.handleSubmit()
+      this.props.tags()
+      toast('New Article added => ' + data.article.title)
+    })
   }
   handleChange = e => {
     this.setState({[e.target.name]: e.target.value})

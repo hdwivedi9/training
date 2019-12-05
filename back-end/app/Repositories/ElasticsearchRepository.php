@@ -8,6 +8,7 @@ use Elasticsearch\Client;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Interfaces\ArticleInterface;
+use App\Events\NewArticleEvent;
 
 class ElasticsearchRepository implements ArticleInterface
 {
@@ -27,6 +28,8 @@ class ElasticsearchRepository implements ArticleInterface
             'id' => $article->getKey(),
             'body' => $article->toSearchArray(),
         ]);
+        sleep(1);
+        event(new NewArticleEvent($article));
     }
 
     public function updateRating(Rating $rating)

@@ -10,19 +10,16 @@ class NewArticleEvent implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $user;
-
-    public $message;
+    public $article;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($article)
     {
-        $this->user = $user;
-        $this->message  = "{$user->name} created an article";
+        $this->article = $article;
     }
 
     /**
