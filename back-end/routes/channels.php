@@ -1,5 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Broadcast;
+// use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('private-article', false);
+// Broadcast::channel('private-article', false);

@@ -55,11 +55,35 @@ class Article extends Component {
       authEndpoint: 'http://localhost:8000/broadcasting/auth',
       forceTLS: true,
     });
-    const channel = socket.subscribe('private-article');
-    channel.bind('App\\Events\\NewArticleEvent', data => {
+    const presenceChannel = socket.subscribe('presence-admin-article')
+    const privateChannel = socket.subscribe('private-article')
+
+    presenceChannel.bind('pusher:subscription_succeeded', members => {
+      if(presenceChannel.subscribed && privateChannel.subscribed)
+        privateChannel.unsubscribe('private-article')
+      toast.success(members.me.info.name + ', you are now subscribed to ' + presenceChannel.name)
+    })
+    presenceChannel.bind('App\\Events\\NewArticleEvent', data => {
       this.handleSubmit()
       this.props.tags()
-      toast('New Article added => ' + data.article.title)
+      toast.info(data.article.title + ' is created')
+    })
+
+    privateChannel.bind('pusher:subscription_succeeded', () => {
+      if(presenceChannel.subscribed && privateChannel.subscribed)
+        privateChannel.unsubscribe('private-article')
+      else {
+        toast.success('You are now subscribed to ' + privateChannel.name)
+        presenceChannel.unsubscribe('presence-admin-article')
+      }
+    })
+    privateChannel.bind('pusher:subscription_error', () => {
+      toast.error('Subscription failed')
+    })
+    privateChannel.bind('App\\Events\\NewArticleEvent', data => {
+      this.handleSubmit()
+      this.props.tags()
+      toast.info(data.article.title + ' is created')
     })
   }
   handleChange = e => {
