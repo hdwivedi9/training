@@ -46,6 +46,18 @@ class ReindexCommand extends Command
     public function handle()
     {
         $this->info('Indexing all articles. This might take a while...');
+        $this->elasticsearch->indices()->create([
+            'index' => 'articles',
+            'body' => [
+                'mappings' => [
+                    'properties' => [
+                        'ratings' => [
+                            'type' => 'nested'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
 
         foreach (Article::with('ratings')->get() as $article)
         {
